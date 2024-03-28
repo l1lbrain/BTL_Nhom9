@@ -2,7 +2,6 @@ package com.example.ecommerceapp.adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,62 +14,56 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.ecommerceapp.R;
 import com.example.ecommerceapp.activities.DetailedActivity;
-import com.example.ecommerceapp.models.PopularProductsModel;
+import com.example.ecommerceapp.models.ShowAllModel;
 
 import java.util.List;
 
-public class PopularProductsAdapter extends RecyclerView.Adapter<PopularProductsAdapter.ViewHolder> {
-
+public class ShowAllAdapter extends RecyclerView.Adapter<ShowAllAdapter.ViewHolder> {
     private Context context;
-    private List<PopularProductsModel> popularProductsModelList;
+    private List<ShowAllModel> list;
 
-    public PopularProductsAdapter(Context context, List<PopularProductsModel> popularProductsModelList) {
+    public ShowAllAdapter(Context context, List<ShowAllModel> list) {
         this.context = context;
-        this.popularProductsModelList = popularProductsModelList;
+        this.list = list;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.popular_items,parent,false));
+        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.show_all_item,parent,false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
-        Glide.with(context).load(popularProductsModelList.get(position).getImg_url()).into(holder.imageView);
-        holder.name.setText(popularProductsModelList.get(position).getName());
-        holder.price.setText(String.valueOf(popularProductsModelList.get(position).getPrice()));
+        Glide.with(context).load(list.get(position).getImg_url()).into(holder.mItemImage);
+        holder.mCost.setText("$"+list.get(position).getPrice());
+        holder.mName.setText(list.get(position).getName());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, DetailedActivity.class);
-                intent.putExtra("detailed", popularProductsModelList.get(position));
+                intent.putExtra("detailed", list.get(position));
                 context.startActivity(intent);
             }
         });
-
     }
 
     @Override
     public int getItemCount() {
-        return popularProductsModelList.size();
+        return list.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-
-        ImageView imageView;
-        TextView name, price;
-
-
+        private ImageView mItemImage;
+        private TextView mCost;
+        private TextView mName;
         public ViewHolder(@NonNull View itemView) {
-
             super(itemView);
 
-            imageView = itemView.findViewById(R.id.all_img);
-            name = itemView.findViewById(R.id.all_product_name);
-            price = itemView.findViewById(R.id.all_price);
+            mItemImage = itemView.findViewById(R.id.item_image);
+            mCost = itemView.findViewById(R.id.item_cost);
+            mName = itemView.findViewById(R.id.item_nam);
 
         }
     }

@@ -7,10 +7,3 @@ buildscript {
 plugins {
     alias(libs.plugins.androidApplication) apply false
 }
-
-//allprojects {
-//    repositories {
-//        //google()
-//        maven("https://jitpack.io")
-//    }
-//}
